@@ -50,7 +50,7 @@ def onResponse(ch, method, props, body):
             'deviceId': deviceId,
             'action': "power on"
             })
-    else:
+    elif verb == 'GET' or verb == "POST":
         payload = {}
         payload['path'] = path
         payload['verb'] = verb
