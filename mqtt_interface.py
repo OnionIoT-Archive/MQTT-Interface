@@ -39,6 +39,8 @@ def onResponse(ch, method, props, body):
     postParams = []
     if len(data) > 2:
         path = data[2]
+
+    if len(data) > 3:
         functionId = data[3]
 
     if len(data) > 4:
@@ -61,6 +63,12 @@ def onResponse(ch, method, props, body):
         else:
             payload['postParams'] = []
         rpc.call('DB_ADD_PROCEDURE', payload)
+    elif verb == 'UPDATE': 
+        payload = {}
+        payload['path'] = path
+        payload['deviceId'] = deviceId
+        payload['value'] = functionId
+        rpc.call('DB_ADD_STATE', payload)
 
 
     print data
