@@ -12,11 +12,11 @@ parameters = pika.ConnectionParameters(credentials=credentials, host=MQ_HOST, vi
 sendConnection = pika.BlockingConnection(parameters)
 sendChannel = sendConnection.channel()
 
-@rpc.register
-def IF_MQTT_SEND(params):
-    deviceId = params['deviceId']
-    cmd = str(params['cmd'])
-    sendChannel.basic_publish(exchange='amq.topic', routing_key='.%s'%deviceId, body=cmd)
+#@rpc.register
+#def IF_MQTT_SEND(params):
+#    deviceId = params['deviceId']
+#    cmd = str(params['cmd'])
+#    sendChannel.basic_publish(exchange='amq.topic', routing_key='.%s'%deviceId, body=cmd)
 
 def mqttRegFunction(params):
     payload = {}
