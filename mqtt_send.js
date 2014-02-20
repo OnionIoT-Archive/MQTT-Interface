@@ -7,26 +7,20 @@ var log = function(msg){
 }
 
 var mqServerUrl = 'amqp://onionCore:p@mqtt.onion.io';
-var conn = null;
-var open = amqp.connect(mqServerUrl);
-open.then(function(connection) {
-    log('mqtt connection opened');
-    conn = connection;
-});
-
-
 
 rpc.register('IF_MQTT_SEND', function(params, callback){
-    var deviceId = params.deviceId
+    var key = '.'+params.deviceId
     var cmd = params.cmd.toString()
+    log(key);
 
+    var open = amqp.connect(mqServerUrl);
     open.then(function(conn) {
         conn.createChannel().then(function(ch) {
-            ch.publish('amq.topic', '.'+deviceId, cmd);
+            ch.publish('amq.topic', key, new Buffer(cmd));
         });
     });
 
-    console.log(params);
+    log(params);
 
     callback({});
 });
