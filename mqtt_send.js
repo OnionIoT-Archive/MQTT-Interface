@@ -17,6 +17,7 @@ rpc.register('IF_MQTT_SEND', function(params, callback){
     open.then(function(conn) {
         conn.createChannel().then(function(ch) {
             ch.publish('amq.topic', key, new Buffer(cmd));
+            conn.close();
         });
     });
 
